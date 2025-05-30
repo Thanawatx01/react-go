@@ -71,6 +71,10 @@ func main() {
 
 	if os.Getenv("ENV") == "production" {
 		app.Static("/", "./client/dist")
+
+		app.Get("/*", func(c *fiber.Ctx) error {
+			return c.SendFile("./client/dist/index.html")
+		})
 	}
 
 	log.Fatal(app.Listen("0.0.0.0:" + port))
